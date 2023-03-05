@@ -1,0 +1,64 @@
+@import '../../styles/global.module.scss';
+
+.pageFill{
+    height: 100vh;
+    width: 100vw;
+
+    position:fixed ;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: row;
+
+    @include glassmorph(0.3, 4px, black, 0, 0);
+
+    z-index: 2;
+}
+
+
+.info{
+    @include center_col();
+    justify-content: center;
+    .timeline, .note{
+        @include glassmorph(0.85, 4px, rgb(200, 200, 255), 0, 4px);
+        padding: 20px;
+        margin: 30px;
+        width: 400px;
+        height: fit-content;
+    }
+}
+
+// https://www.w3schools.com/howto/howto_css_flip_card.asp
+
+.flipInner{
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flipCard:hover {
+    cursor: pointer;
+    .flipInner {
+        transform: rotateY(180deg);
+    }
+}
+  
+.flipFront, .flipBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flipFront {
+    color: black;
+}
+
+.flipBack {    
+    color: black;
+    transform: rotateY(180deg);
+    text-decoration: underline;
+}

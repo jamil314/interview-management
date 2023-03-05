@@ -1,0 +1,18 @@
+@import '../../styles/global.module.scss';
+
+.form {
+
+  @include glassmorph(0.2, 4px, blue, 1, 16px);
+
+  border-radius: 3vh;
+  padding: 5vh 5vw;
+}
+
+.forgot {
+  float: right;
+  color: aliceblue;
+}
+
+.button {
+  width: 100%;
+}

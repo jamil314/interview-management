@@ -1,0 +1,17 @@
+@import '../../styles/global.module.scss';
+@import '../../styles/margins.module.scss';
+
+.content{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    @include glassmorph(0.9, 4px, $ant-blue, 0, 0);
+    
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+:export{
+    tableHeight: calc(100vh - $header-height - $footer-height - 129px);
+}

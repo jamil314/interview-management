@@ -1,0 +1,23 @@
+@import '../../styles/global.module.scss';
+@import '../../styles/margins.module.scss';
+
+.container{
+    height: 100%;
+    background-color: $ant-black;
+    padding-top: 16px;
+}
+
+.menu{
+    height: 100%;
+    @include center-col();
+    padding-left: 10px;
+}
+
+.overlay{
+    background-color: $ant-blue;
+    height: calc( 100% - $header-height - $footer-height );
+    width: 10px;
+    position: absolute;
+    top: $header-height;
+    z-index: 0;
+}

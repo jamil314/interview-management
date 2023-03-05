@@ -1,0 +1,56 @@
+@import 'global.module.scss';
+
+$header-height: 85px;
+$footer-height: 50px;
+
+@mixin margins{
+    @include center_row();
+    @include glassmorph(0.8, 4px, black, 0, 0);
+    width: 100vw;
+    color: white;
+}
+
+.header{
+    @include margins();
+    height: $header-height;
+    padding-left: 32px;
+    justify-content: start;
+    position: absolute;
+    top: 0;
+}
+
+.logo {
+    height: 55px;
+    width: 55px;
+    background-image: url('../resources/logo2.jpg');
+    background-size: cover;
+    margin-right: 15px;
+}
+
+.footer{
+    @include margins();
+    height: $footer-height;
+    padding-right: 32px;
+    justify-content: end;
+    position: absolute;
+    bottom: 0
+}
+
+@mixin main_body ($bg){
+    @include center_row();
+    width: 100vw;
+    height: 100vh;
+    padding-top: $header-height;
+    padding-bottom: $footer-height;
+    background-image: url($bg);
+    background-size: cover;
+}
+
+.login{
+    @include main_body('../resources/bg1.jpg');
+}
+
+.hr{
+    @include main_body('../resources/bg2.jpg');
+    position: relative ;
+}

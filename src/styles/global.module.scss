@@ -1,0 +1,26 @@
+$ant-blue: #1677ff;
+$ant-black: #001529;
+@mixin center{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+@mixin center_row{
+    @include center();
+    flex-direction: row;
+}
+
+@mixin center_col{
+    @include center();
+    flex-direction: column;
+}
+
+@mixin glassmorph ($opacity, $blur, $color, $border, $corner){
+    background: rgba($color, $opacity);
+    border-radius: $corner;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur($blur);
+    -webkit-backdrop-filter: blur($blur);
+    border: 1px solid rgba($color, $border);
+}
