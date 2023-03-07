@@ -6,11 +6,12 @@ import margin from '../styles/margins.module.scss';
 
 import Applications from '@/component/hr/Applications';
 import Shortlist from '@/component/hr/Shortlist';
+import JobPosts from '@/component/hr/JobPosts';
 
 
 const manage : React.FC = () => {
   
-  const contents = [<Applications/>, <Shortlist/>];
+  const contents = [<Applications/>, <Shortlist/>, <JobPosts/>];
 
   const [Content, setContent] = useState<React.ReactNode> (contents[0]);
   const changeContent = (contentId : number) => {

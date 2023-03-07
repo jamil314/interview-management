@@ -12,6 +12,34 @@
     padding-right: 10px;
 }
 
+.TableContainer{
+    position: relative;
+}
+
+.TableActionButtons{
+    position: absolute;
+    left: 6px;
+    bottom: 16px;
+    z-index: 1;
+}
+
+.show {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform .5s;
+}
+
+.hide{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform .5s;
+    transform: 
+        translate(50vw, 50vh) 
+        scale(0);
+}
+
 :export{
     tableHeight: calc(100vh - $header-height - $footer-height - 129px);
 }

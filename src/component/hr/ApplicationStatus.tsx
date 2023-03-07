@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { Button, RadioChangeEvent, Rate } from 'antd';
+import { Button, Card, RadioChangeEvent, Rate } from 'antd';
 import { Radio, Timeline } from 'antd';
-import status from './ApplicationStatus.module.scss'
 
-const flipper : React.FC <number> = ( step ) => {
+import { EditOutlined,EllipsisOutlined,SettingOutlined } from '@ant-design/icons';
+
+import status from './ApplicationStatus.module.scss'
+interface flipperProp {
+    step : number,
+    assignInterviewer : () => void
+}
+const flipper : React.FC <flipperProp> = ( {step, assignInterviewer} ) => {
     return(
-        <div className={status.flipCard} onClick={() => alert(step)}>
+        <div className={status.flipCard} onClick={assignInterviewer}>
             <div className={status.flipInner}>
                 <div className={status.flipFront}>
                     Pending
@@ -18,11 +24,42 @@ const flipper : React.FC <number> = ( step ) => {
     )
 }
 
+interface interviewrCardProps {
+    name : string,
+    position : string,
+    schedule : string
+}
+
+const interviewerCard : React.FC<interviewrCardProps> = ({name, position, schedule}) => {
+    return (
+        <Card
+            actions={[
+                'Set Up Interview'
+            ]}
+        >
+            <div className={status.interviewerCard}>
+                <img src='./person_round.png' className={status.interviewerPhoto}/>
+                <div className={status.interviewerInfo}>
+                    <p> Name : {name} </p>
+                    <p> Position : {position} </p>
+                    <p> Schedule : {schedule} </p>
+                </div>
+            </div>
+        </Card>
+    )
+}
+
 type Props = {
     resetFocus : () => void
 }
 
 const ApplicationStatus : React.FC<Props> = ({resetFocus}) => {
+    
+    const [assign, setAssign] = useState(false);
+
+    const assignInterviewer = () => {
+        setAssign(true)
+    }
 
     return (
         <div className={status.pageFill} onClick={() => resetFocus()} >
@@ -48,7 +85,7 @@ const ApplicationStatus : React.FC<Props> = ({resetFocus}) => {
                             {
                                 color: 'gray',
                                 // label: 'pending',
-                                label: flipper(3),
+                                label: flipper({ step : 3 , assignInterviewer}),
                                 children: 'third interview',
                             },
                         ]}
@@ -64,6 +101,51 @@ const ApplicationStatus : React.FC<Props> = ({resetFocus}) => {
                     <p>Communication : <Rate defaultValue={6} disabled allowHalf count={7}/> </p>
                 </div>
             </div>
+            {
+                assign ? 
+                <>
+                    <Button shape='circle' className={status.closeInterviewrSelection} onClick={e => {e.stopPropagation(); setAssign(false)}}> X </Button>
+                    <div className={status.interviewers} onClick={e => e.stopPropagation()}>
+                            {/* list of interviewers <br/> */}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    </div>
+                    {/* <div className={status.pageFill}>
+
+                    </div> */}
+                </>
+                : null
+            }
         </div>
     )
 }

@@ -12,7 +12,6 @@
     flex-direction: row;
 
     @include glassmorph(0.3, 4px, black, 0, 0);
-
     z-index: 2;
 }
 
@@ -61,4 +60,45 @@
     color: black;
     transform: rotateY(180deg);
     text-decoration: underline;
+}
+
+.interviewers{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+
+    @include glassmorph(0.85, 4px, rgb(200, 200, 255), 0, 4px);
+    padding: 20px;
+    margin: 30px;
+    width: 100%;
+    height: fit-content;
+    max-height: calc(100vh - 60px);
+
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.interviewerCard{
+    display: flex;
+    height: 100px;
+    width: 300px;
+}
+
+.interviewerPhoto{
+    border-right: 4px;
+    border-right-style : solid;
+    padding-right: 8px;
+    margin-right: 16px;
+}
+
+.interviewerInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.closeInterviewrSelection{
+    position: absolute;
+    left : 470px;
+    top: 10px;
+    z-index: 1;
 }

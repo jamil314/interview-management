@@ -228,7 +228,6 @@ const Shortlist: React.FC = () => {
         </div>
         {
           focus != null ?
-            // <Resume closeResume={closeResume} resumeId={resumeId}/>
             <ApplicationStatus resetFocus = {resetFocus}/>
           :null
         }

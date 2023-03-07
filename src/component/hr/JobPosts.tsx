@@ -1,41 +1,35 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { SearchOutlined, DownloadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
-import { Button, Tooltip, notification, Space, InputRef, Input, Table } from 'antd';
+import { InputRef, Tooltip } from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps, ColumnsType, FilterValue, SorterResult  } from 'antd/es/table/interface';
-
 import Highlighter from 'react-highlight-words';
-import data from "../../../Dummy/DummyApplications.js";
+import data from "../../../Dummy/DummyJobs.js";
 
 import hr from '../hr/hr.module.scss'
 
-import Resume from '@/component/hr/Resume';
-
+import JobCard from './JobCard';
 
 
 interface DataType {
     id: number;
-    Name: string;
-    Email: string;
-    Phone: string;
     Position: string;
-    Resume: string;
-    Status: string;
-    applicationDate: string;
+    Salary: string;
+    Opening: string;
+    Applicants: string;
+    Deadline: string;
 }
 
 type DataIndex = keyof DataType;
 
 
-const Applications: React.FC = () => {
+const JobPosts: React.FC = () => {
 
-  const [resumeId, setResumeId] = useState<null | string>(null);
-  const openResume = (id : string) => {
-    setResumeId(id);
-  }
-  
-  const closeResume = () => {
-    setResumeId(null);
+  const [focus, setFocus] = useState<null | string>(null);
+
+  const resetFocus = () => {
+    setFocus(null);
   }
 
   const [filteredInfo, setFilteredInfo] = useState<Record<string, FilterValue | null>>({});
@@ -54,26 +48,6 @@ const Applications: React.FC = () => {
             // hideOnSinglePage: true,
         },
     });
-
-    const [api, contextHolder] = notification.useNotification();
-
-    const initialScreening = ( action : string) => {
-      closeResume();
-      if(action == 'accept'){
-        api.success({
-          message: 'Added the CV to Shortlist',
-          description: <Button> Undo </Button>,
-          placement : 'topRight',
-        });
-      } else {
-        api.error({
-          message: 'Dropped the Cv',
-          description: <Button> Undo </Button>,
-          placement : 'topRight',
-        });
-      }
-    };
-    
 
   const handleSearch = (
     selectedKeys: string[],
@@ -167,18 +141,8 @@ const Applications: React.FC = () => {
       ),
   });
 
+
   const columns: ColumnsType<DataType> = [
-    {
-      title: 'Name',
-      dataIndex: 'Name',
-      sorter: (a, b) => a.Name.length - b.Name.length,
-      ... getColumnSearchProps('Name'),
-    },
-    {
-        title: 'Phone',
-        dataIndex: 'Phone',
-        width: '20%',
-    },
     {
         title: 'Position',
         dataIndex: 'Position',
@@ -191,42 +155,28 @@ const Applications: React.FC = () => {
         sorter: (a, b) => a.Position.length - b.Position.length,
     //   sortOrder: sortedInfo.columnKey === 'Position' ? sortedInfo.order : null,
         // ellipsis: true,
-        width: '15%',
+        width: '20%',
 
     },
     {
-        title: 'Date',
-        dataIndex: 'applicationDate',
-        width: '15%',
+        title: 'Salary',
+        dataIndex: 'Salary',
+        width: '20%',
     },
     {
-        title: 'Status',
-        dataIndex: 'Status',
-        width: '10%',
-        render: (value) => <div style = {value ==  "Read" ? {opacity :  0.8} : {opacity :  1} }>{value ==  "Read" ? value   : value + " *" }</div>,
-        filters: [
-            { text: 'Read',   value: 'Read' },
-            { text: 'Unread', value: 'Unread' },
-        ],
-        onFilter: (value: any, record) => record.Status.includes(value),
+        title: 'Opening',
+        dataIndex: 'Opening',
+        width: '20%',
     },
     {
-        title: 
-            <Tooltip title = "Download All CV">
-                <CloudDownloadOutlined onClick={e => alert('Downloading Cv of all participants in this page')}/>
-            </Tooltip>,
-        dataIndex: 'Resume',
-        width: '10%',
-        render: (record, index) => 
-        <Tooltip title = "Download CV">
-            <DownloadOutlined 
-                onClick={ e => {
-                        e.stopPropagation(); 
-                        alert(`Downloading Cv of participant with id: ${index.id}`)}
-                    }
-                style={{padding : '2px 20px'}}
-             />
-        </Tooltip>,
+        title: 'Applicants',
+        dataIndex: 'Applicants',
+        width: '20%',
+    },
+    {
+        title: 'Application Deadline',
+        dataIndex: 'Deadline',
+        width: '20%',
     },
   ];
 
@@ -247,33 +197,41 @@ const Applications: React.FC = () => {
     };
     
     return (
-      <>      
-      {contextHolder}
+      <>
         <div className={hr.content}>
-          <Table
-              scroll={{y: `${hr.tableHeight}` }}
-              columns = {columns}
-              rowKey={(record) => record.id}
-              dataSource={data}
-              pagination={tableParams.pagination}
-              loading={loading}
-              onChange={handleTableChange}
-              rowClassName={(record, index) => `tableCell${record.Status} shadowOnHover`}
-              onRow={(record, rowIndex) => {
-                return {
-                  onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
-                  openResume(`${record.id}`)
-                };
-              }}
-          />
+          <div className={hr.TableContainer}>
+            <Table
+                scroll={{y: `${hr.tableHeight}` }}
+                columns = {columns}
+                rowKey={(record) => record.id}
+                dataSource={data}
+                pagination={tableParams.pagination}
+                loading={loading}
+                onChange={handleTableChange}
+                rowClassName={(record, index) => ` shadowOnHover`}
+                onRow={(record, rowIndex) => {
+                  return {
+                    onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
+                    setFocus(`${record.id}`)
+                  };
+                }}
+            />
+            <div className={hr.TableActionButtons}>
+                <Button> Add New Job</Button>
+            </div>
+          </div>
         </div>
-        {
-          resumeId != null ?
-            <Resume closeResume={closeResume} resumeId={resumeId} initialScreening = {initialScreening}/>
+        {/* {
+          focus != null ?
+            <JobCard resetFocus = {resetFocus}/>
           :null
-        }
+        } */}
+          <div className={focus?hr.show : hr.hide}>
+            <JobCard resetFocus = {resetFocus}/>
+          </div>
+
       </>
     )
 };
 
-export default Applications;
+export default JobPosts;
