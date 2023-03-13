@@ -1,7 +1,7 @@
 import React from "react";
 import { LayoutFilled, ScheduleFilled, DownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme, Dropdown, Avatar } from "antd";
+import { Layout, Menu, theme, Dropdown, Avatar, Card } from "antd";
 import { interviewerData } from "Dummy/interviewerData";
 import type { InterViewProps } from "Dummy/interviewTime";
 
@@ -108,13 +108,18 @@ const InterviewerHome: React.FC = () => {
         </Header>
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
           <div className="stat-card" style={{}}>
-            <h1>
-              You have {interviewerData.interviews.length} upcoming interviews
-            </h1>
-            <h3>
+            <Card
+              title={
+                "You have " +
+                interviewerData.interviews.length +
+                " upcoming interviews"
+              }
+              style={{}}
+            >
+              {" "}
               Next interview in
               {" " + getSoonestInterview(interviewerData.interviews)}
-            </h3>
+            </Card>
           </div>
           <div className="small-calender" style={{}}>
             <h1>Calender</h1>
