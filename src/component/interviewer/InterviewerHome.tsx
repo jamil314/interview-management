@@ -1,7 +1,7 @@
 import React from "react";
-import { LayoutFilled, ScheduleFilled } from "@ant-design/icons";
+import { LayoutFilled, ScheduleFilled, DownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme, Dropdown, Avatar } from "antd";
 import { interviewerData } from "Dummy/interviewerData";
 import type { InterViewProps } from "Dummy/interviewTime";
 
@@ -12,7 +12,7 @@ const InterviewerHome: React.FC = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const menuItems: MenuProps["items"] = [
+  const siderMenuItems: MenuProps["items"] = [
     {
       key: "home",
       icon: <LayoutFilled />,
@@ -22,6 +22,27 @@ const InterviewerHome: React.FC = () => {
       key: "Schedule",
       icon: <ScheduleFilled />,
       label: "Schedule",
+    },
+  ];
+
+  const avatarMenuItems: MenuProps["items"] = [
+    {
+      key: "profile",
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="">
+          {" "}
+          Profile
+        </a>
+      ),
+    },
+    {
+      key: "logout",
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="">
+          {" "}
+          Logout
+        </a>
+      ),
     },
   ];
 
@@ -63,7 +84,7 @@ const InterviewerHome: React.FC = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["home"]}
-          items={menuItems}
+          items={siderMenuItems}
         />
       </Sider>
       <Layout className="site-layout" style={{ marginLeft: 200 }}>
@@ -76,7 +97,14 @@ const InterviewerHome: React.FC = () => {
           <div className="header-text-small" style={{}}>
             <h2>{"Here's"} your schedule for today</h2>
           </div>
-          <div className="profile-icon" style={{}}></div>
+          <div className="profile-icon" style={{}}>
+            <Dropdown menu={{ items: avatarMenuItems }}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Avatar size={40}>{interviewerData.firstName}</Avatar>
+                <DownOutlined />
+              </a>
+            </Dropdown>
+          </div>
         </Header>
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
           <div className="stat-card" style={{}}>
