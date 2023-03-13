@@ -1,4 +1,4 @@
-@import '../../styles/global.module.scss';
+@import '../../../styles/global.module.scss';
 
 .pageFill{
     height: 100vh;
@@ -20,7 +20,11 @@
 
 
 .main{
-    @include glassmorph(0.85, 4px, rgb(200, 200, 255), 0, 4px);
     width: 400px;
+    height: fit-content;
+}
+
+.add{
+    width: 600px;
     height: fit-content;
 }

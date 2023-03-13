@@ -8,8 +8,8 @@
 
     @include glassmorph(0.9, 4px, $ant-blue, 0, 0);
     
-    padding-top: 10px;
-    padding-right: 10px;
+    padding: 10px;
+    flex-direction: column;
 }
 
 .TableContainer{
@@ -21,25 +21,55 @@
     left: 6px;
     bottom: 16px;
     z-index: 1;
+    display: flex;
+    .gap{
+        width: 16px;
+        height: 16px;
+    }
 }
 
 .show {
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform .5s;
+    .animation{
+        transition: transform .5s;
+    }
+    .resumeAnimation{
+        transition: transform .5s;
+    }
 }
 
 .hide{
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform .5s;
-    transform: 
-        translate(50vw, 50vh) 
-        scale(0);
+    transform: scale(0);
+    transition-delay: .3s;
+    .animation{
+        transform: scale(0);
+        transition: transform .3s;
+    }
+    .resumeAnimation{
+        transform: translateY(100%);
+        transition: transform .3s;
+    }
 }
 
+.topBar{
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    background-color: aliceblue;
+
+    display: flex;
+    > * {
+        @include center-col();
+        padding: 0 5px;
+    }
+}
+
+
 :export{
-    tableHeight: calc(100vh - $header-height - $footer-height - 129px);
+    tableHeight: calc(100vh - $header-height - $footer-height - 129px - 50px);
 }

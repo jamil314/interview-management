@@ -1,40 +1,69 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { SearchOutlined, DownloadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
-import { InputRef, Tooltip } from 'antd';
+import { InputRef, Tooltip, notification } from 'antd';
 import { Button, Input, Space, Table } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps, ColumnsType, FilterValue, SorterResult  } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
-import data from "../../../Dummy/DummyApplications.js";
+import data from "../../../../Dummy/DummyInterviewers.js";
 
-import hr from '../hr/hr.module.scss'
-
-import ApplicationStatus from './ApplicationStatus';
-import TopBar from './TopBar';
-
-
-
+import hr from '../hr.module.scss'
+import TopBar from '../TopBar';
+import InterviewrCard from './InterviewerCard';
 
 interface DataType {
-    id: number;
+    id: string;
     Name: string;
     Email: string;
     Phone: string;
     Position: string;
-    Resume: string;
-    Status: string;
-    applicationDate: string;
+    Schedule: string;
 }
 
 type DataIndex = keyof DataType;
 
 
-const Shortlist: React.FC = () => {
+const Interviewers: React.FC = () => {
 
-  const [focus, setFocus] = useState<null | string>(null);
+  const [focusInterviewer, setFocusInterviewer] = useState<null | string>(null);
+  const [createInterviewer, setCreateInterviewer] = useState(false);
 
-  const resetFocus = () => {
-    setFocus(null);
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const interviewerCreationStatus = ( action : string) => {
+    closeCreateInterviewer();
+    switch (action) {
+      case 'Draft':
+        api.success({
+          message: 'Saved to Draft',
+          placement : 'topRight',
+        });
+        break;
+      case 'Discard':
+        api.warning({
+          message: 'Discarded',
+          placement : 'topRight',
+        });
+        break;
+      case 'Confirm':
+        api.success({
+          message: 'New Interviewer Added',
+          placement : 'topRight',
+        });
+        break;
+    
+      default:
+        break;
+    }
+  };
+
+  const closeCreateInterviewer = () => {
+    setCreateInterviewer(false);
+  }
+
+  const resetFocusInterviewer = () => {
+    setFocusInterviewer(null);
   }
 
   const [filteredInfo, setFilteredInfo] = useState<Record<string, FilterValue | null>>({});
@@ -146,12 +175,17 @@ const Shortlist: React.FC = () => {
       ),
   });
 
+
   const columns: ColumnsType<DataType> = [
     {
       title: 'Name',
-      dataIndex: 'Name',
-      sorter: (a, b) => a.Name.length - b.Name.length,
-      ... getColumnSearchProps('Name'),
+        dataIndex: 'Name',
+        width: '20%',
+    },
+    {
+        title: 'Email',
+        dataIndex: 'Email',
+        width: '20%',
     },
     {
         title: 'Phone',
@@ -170,24 +204,13 @@ const Shortlist: React.FC = () => {
         sorter: (a, b) => a.Position.length - b.Position.length,
     //   sortOrder: sortedInfo.columnKey === 'Position' ? sortedInfo.order : null,
         // ellipsis: true,
-        width: '15%',
+        width: '20%',
 
     },
     {
-        title: 'Date',
-        dataIndex: 'applicationDate',
-        width: '15%',
-    },
-    {
-        title: 'Status',
-        dataIndex: 'Status',
-        width: '10%',
-        render: (value) => <div style = {value ==  "Read" ? {opacity :  0.8} : {opacity :  1} }>{value ==  "Read" ? value   : value + " *" }</div>,
-        filters: [
-            { text: 'Read',   value: 'Read' },
-            { text: 'Unread', value: 'Unread' },
-        ],
-        onFilter: (value: any, record) => record.Status.includes(value),
+        title: 'Schedule',
+        dataIndex: 'Schedule',
+        width: '20%',
     },
   ];
 
@@ -209,32 +232,40 @@ const Shortlist: React.FC = () => {
     
     return (
       <>
+        {contextHolder}
         <div className={hr.content}>
-          <TopBar notification="5 new Shortlisted Applications"/>
-          <Table
-              scroll={{y: `${hr.tableHeight}` }}
-              columns = {columns}
-              rowKey={(record) => record.id}
-              dataSource={data}
-              pagination={tableParams.pagination}
-              loading={loading}
-              onChange={handleTableChange}
-              rowClassName={(record, index) => `tableCell${record.Status} shadowOnHover`}
-              onRow={(record, rowIndex) => {
-                return {
-                  onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
-                  setFocus(`${record.id}`)
-                };
-              }}
-          />
+        <TopBar notification={`"Rahu Shinjo" is unavailable from 10 - 13 April`}/>
+          <div className={hr.TableContainer}>
+            <Table
+                scroll={{y: `${hr.tableHeight}` }}
+                columns = {columns}
+                rowKey={(record) => record.id}
+                dataSource={data}
+                pagination={tableParams.pagination}
+                loading={loading}
+                onChange={handleTableChange}
+                rowClassName={(record, index) => ` shadowOnHover`}
+                onRow={(record, rowIndex) => {
+                  return {
+                    onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
+                    setFocusInterviewer(`${record.id}`)
+                  };
+                }}
+            />
+            <div className={hr.TableActionButtons}>
+                <Button onClick={() => setCreateInterviewer(true)}> + Add New Interviewer</Button>
+            </div>
+          </div>
         </div>
-        {
-          focus != null ?
-            <ApplicationStatus resetFocus = {resetFocus}/>
-          :null
-        }
+          <div className={focusInterviewer?hr.show : hr.hide}>
+            <InterviewrCard resetFocusInterviewer = {resetFocusInterviewer}/>
+          </div>
+          {/* <div className={createInterviewer?hr.show : hr.hide}>
+            <AddInterviewer InterviewerCreationStatus = {interviewerCreationStatus}/>
+          </div> */}
+
       </>
     )
 };
 
-export default Shortlist;
+export default Interviewers;

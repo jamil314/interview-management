@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { SearchOutlined, DownloadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
+import { SearchOutlined, DownloadOutlined, CloudDownloadOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Tooltip, notification, Space, InputRef, Input, Table } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps, ColumnsType, FilterValue, SorterResult  } from 'antd/es/table/interface';
@@ -10,6 +10,7 @@ import data from "../../../Dummy/DummyApplications.js";
 import hr from '../hr/hr.module.scss'
 
 import Resume from '@/component/hr/Resume';
+import TopBar from './TopBar';
 
 
 
@@ -247,31 +248,34 @@ const Applications: React.FC = () => {
     };
     
     return (
-      <>      
-      {contextHolder}
-        <div className={hr.content}>
-          <Table
-              scroll={{y: `${hr.tableHeight}` }}
-              columns = {columns}
-              rowKey={(record) => record.id}
-              dataSource={data}
-              pagination={tableParams.pagination}
-              loading={loading}
-              onChange={handleTableChange}
-              rowClassName={(record, index) => `tableCell${record.Status} shadowOnHover`}
-              onRow={(record, rowIndex) => {
-                return {
-                  onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
-                  openResume(`${record.id}`)
-                };
-              }}
-          />
-        </div>
-        {
-          resumeId != null ?
+      <>
+        {contextHolder}
+          <div className={hr.content}>
+            <TopBar notification="5 new Applications"/>
+            <Table
+                scroll={{y: `${hr.tableHeight}` }}
+                columns = {columns}
+                rowKey={(record) => record.id}
+                dataSource={data}
+                pagination={tableParams.pagination}
+                loading={loading}
+                onChange={handleTableChange}
+                rowClassName={(record, index) => `tableCell${record.Status} shadowOnHover`}
+                onRow={(record, rowIndex) => {
+                  return {
+                    onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
+                    openResume(`${record.id}`)
+                  };
+                }}
+            />
+          </div>
+          {/* {
+            resumeId != null ?
+            :null
+          } */}
+          <div className={resumeId?hr.show : hr.hide}>
             <Resume closeResume={closeResume} resumeId={resumeId} initialScreening = {initialScreening}/>
-          :null
-        }
+          </div>
       </>
     )
 };

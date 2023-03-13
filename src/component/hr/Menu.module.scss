@@ -1,0 +1,52 @@
+@import '../../styles/global.module.scss';
+@import '../../styles/margins.module.scss';
+
+.container{
+    height: 100%;
+    background-color: $ant-black;
+    padding-top:126px;
+}
+
+.menu{
+    height: 100%;
+    @include center-col();
+    padding-left: 10px;
+}
+
+
+.header{
+    position: absolute;
+    top: 16px;
+    width: 162px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    background-color: $ant-black;    
+}
+.toggle{
+    width : 64px;
+    margin : 0 20px 16px 0 - 120px;
+}
+.logo {
+    height: 55px;
+    width: 55px;
+    background-image: url('../../resources/logo.png');
+    background-size: cover;
+    margin-right: 15px;
+    margin-left: -40px;
+}
+.title{
+    display: flex;
+    :hover{
+        cursor: default;
+    }
+}
+
+.overlay{
+    background-color: $ant-blue;
+    height: calc( 100% - $header-height - $footer-height );
+    width: 10px;
+    position: absolute;
+    top: $header-height;
+    z-index: 0;
+}

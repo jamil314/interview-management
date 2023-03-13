@@ -142,3 +142,14 @@ a {
   border-top-color: rgb(255 255 255);
 }
 
+.ant-menu-dark .ant-menu-item-selected{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ant-menu-inline .ant-menu-item{
+  width: 100%;
+}
+.ant-menu-vertical .ant-menu-item{
+  width: 100%;
+}

@@ -8,6 +8,7 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import '@react-pdf-viewer/toolbar/lib/styles/index.css';
 
 import resume from "./Resume.module.scss";
+import hr from "./hr.module.scss";
 
 import {CloseOutlined} from '@ant-design/icons';
 
@@ -87,13 +88,14 @@ const Resume: React.FC<props> = ({closeResume, resumeId, initialScreening}) => {
   return (
     <>
         <div className={resume.pageFill} onClick={closeResume}>
-            <div className={resume.container} onClick={e => e.stopPropagation()}>
+            <div className={`${resume.container} ${hr.resumeAnimation} `} onClick={e => e.stopPropagation()}>
                 <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.3.122/build/pdf.worker.min.js">
                   <Toolbar>{customToolbar}</Toolbar>
 
                     <Viewer 
                         
-                        fileUrl = './resume1.pdf'
+                        // fileUrl = './resume1.pdf'
+                        fileUrl = 'http://192.168.68.101:8090/api/files/sgbc47vjl2xaoev/8o028bidetxexe0/job_interview_database_shema_20_feb_2023_zW3R5rUSyI.pdf'
                         plugins = {[
                           toolbarPluginInstance
                         ]}

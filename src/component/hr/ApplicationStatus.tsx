@@ -101,51 +101,42 @@ const ApplicationStatus : React.FC<Props> = ({resetFocus}) => {
                     <p>Communication : <Rate defaultValue={6} disabled allowHalf count={7}/> </p>
                 </div>
             </div>
-            {
-                assign ? 
-                <>
-                    <Button shape='circle' className={status.closeInterviewrSelection} onClick={e => {e.stopPropagation(); setAssign(false)}}> X </Button>
-                    <div className={status.interviewers} onClick={e => e.stopPropagation()}>
-                            {/* list of interviewers <br/> */}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                            {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
-                    </div>
-                    {/* <div className={status.pageFill}>
-
-                    </div> */}
-                </>
-                : null
-            }
+            <Button shape='circle' className={`${status.closeInterviewrSelection} ${assign?status.showSetInterview : status.hideSetInterview}`} onClick={e => {e.stopPropagation(); setAssign(false)}}> X </Button>
+            <div className={`${status.interviewers} ${assign?status.showSetInterview : status.hideSetInterview}`} onClick={e => e.stopPropagation()}>
+                    {/* list of interviewers <br/> */}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+                    {interviewerCard({name : "Shakib Al Hasan", position : "All Rounder", schedule : "10pm - 6am"})}
+            </div>
         </div>
     )
 }

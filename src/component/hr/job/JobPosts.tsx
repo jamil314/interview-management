@@ -1,19 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { SearchOutlined, DownloadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
-import { InputRef, Tooltip } from 'antd';
+import { InputRef, Tooltip, notification } from 'antd';
 import { Button, Input, Space, Table } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps, ColumnsType, FilterValue, SorterResult  } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
-import data from "../../../Dummy/DummyJobs.js";
+import data from "../../../../Dummy/DummyJobs.js";
 
-import hr from '../hr/hr.module.scss'
+import hr from '../hr.module.scss'
 
 import JobCard from './JobCard';
-
+import AddJob from './AddJob';
+import TopBar from '../TopBar';
+import AddPosition from './AddPosition';
 
 interface DataType {
-    id: number;
+    id: string;
     Position: string;
     Salary: string;
     Opening: string;
@@ -26,10 +28,73 @@ type DataIndex = keyof DataType;
 
 const JobPosts: React.FC = () => {
 
-  const [focus, setFocus] = useState<null | string>(null);
+  const [focusJob, setFocusJob] = useState<null | string>(null);
+  const [createJob, setCreateJob] = useState(false);
+  const [createPosition, setCreatePosition] = useState(false);
 
-  const resetFocus = () => {
-    setFocus(null);
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const jobCreationStatus = ( action : string) => {
+    closeCreateJob();
+    switch (action) {
+      case 'Draft':
+        api.success({
+          message: 'Saved to Draft',
+          placement : 'topRight',
+        });
+        break;
+      case 'Discard':
+        api.warning({
+          message: 'Discarded',
+          placement : 'topRight',
+        });
+        break;
+      case 'Confirm':
+        api.success({
+          message: 'New Job Created',
+          placement : 'topRight',
+        });
+        break;
+    
+      default:
+        break;
+    }
+  };
+
+  const positionCreationStatus = ( action : string) => {
+    setCreatePosition(false);
+    switch (action) {
+      case 'Draft':
+        api.success({
+          message: 'Saved to Draft',
+          placement : 'topRight',
+        });
+        break;
+      case 'Discard':
+        api.warning({
+          message: 'Discarded',
+          placement : 'topRight',
+        });
+        break;
+      case 'Confirm':
+        api.success({
+          message: 'New Position Created',
+          placement : 'topRight',
+        });
+        break;
+    
+      default:
+        break;
+    }
+  };
+
+  const closeCreateJob = () => {
+    setCreateJob(false);
+  }
+
+  const resetFocusJob = () => {
+    setFocusJob(null);
   }
 
   const [filteredInfo, setFilteredInfo] = useState<Record<string, FilterValue | null>>({});
@@ -198,7 +263,9 @@ const JobPosts: React.FC = () => {
     
     return (
       <>
+        {contextHolder}
         <div className={hr.content}>
+        <TopBar notification={`Application Deadline for the post "Senior Software Engineer" is over`}/>
           <div className={hr.TableContainer}>
             <Table
                 scroll={{y: `${hr.tableHeight}` }}
@@ -212,22 +279,25 @@ const JobPosts: React.FC = () => {
                 onRow={(record, rowIndex) => {
                   return {
                     onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
-                    setFocus(`${record.id}`)
+                    setFocusJob(`${record.id}`)
                   };
                 }}
             />
             <div className={hr.TableActionButtons}>
-                <Button> Add New Job</Button>
+                <Button onClick={() => setCreateJob(true)}> + Add New Job</Button>
+                <div className={hr.gap}/>
+                <Button onClick={() => setCreatePosition(true)}> + Add New position</Button>
             </div>
           </div>
         </div>
-        {/* {
-          focus != null ?
-            <JobCard resetFocus = {resetFocus}/>
-          :null
-        } */}
-          <div className={focus?hr.show : hr.hide}>
-            <JobCard resetFocus = {resetFocus}/>
+          <div className={focusJob?hr.show : hr.hide}>
+            <JobCard resetFocusJob = {resetFocusJob}/>
+          </div>
+          <div className={createJob?hr.show : hr.hide}>
+            <AddJob jobCreationStatus = {jobCreationStatus}/>
+          </div>
+          <div className={createPosition?hr.show : hr.hide}>
+            <AddPosition positionCreationStatus = {positionCreationStatus}/>
           </div>
 
       </>

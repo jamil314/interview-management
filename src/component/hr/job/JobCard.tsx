@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import jobCard from './JobCard.module.scss'
+import hr from '../hr.module.scss'
 
 import { Button, Card, RadioChangeEvent, Rate } from 'antd';
 
@@ -26,17 +27,17 @@ const card : React.FC<string> = (id) => {
 
 
 type Props = {
-    resetFocus : () => void
+    resetFocusJob : () => void
 }
 
-const JobCard : React.FC<Props> = ({resetFocus}) => {
+const JobCard : React.FC<Props> = ({resetFocusJob}) => {
     return (
-        <div className={jobCard.pageFill} onClick={() => resetFocus()} >
-            <div className={jobCard.main} onClick={e => e.stopPropagation()}>
+        <div className={jobCard.pageFill} onClick={() => resetFocusJob()} >
+            <div className = {`${jobCard.main} ${hr.animation}`}  onClick={e => e.stopPropagation()}>
                 {card('10')}
             </div>
         </div>
     )
 }
 
-export default JobCard
+export default JobCard;

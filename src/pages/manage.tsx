@@ -1,4 +1,4 @@
-import Dashboard from '@/component/hr/Dashboard';
+import Menu from '@/component/hr/MenuComponent';
 import Footer from '@/component/margins/Footer'
 import Header from '@/component/margins/Header'
 import React, { useState } from 'react'
@@ -6,12 +6,14 @@ import margin from '../styles/margins.module.scss';
 
 import Applications from '@/component/hr/Applications';
 import Shortlist from '@/component/hr/Shortlist';
-import JobPosts from '@/component/hr/JobPosts';
+import JobPosts from '@/component/hr/job/JobPosts';
+import DashBoard from '@/component/hr/DashBoard';
+import Interviewers from '@/component/hr/interviewer/Interviewers';
 
 
 const manage : React.FC = () => {
   
-  const contents = [<Applications/>, <Shortlist/>, <JobPosts/>];
+  const contents = [<DashBoard/>, <Applications/>, <Shortlist/>, <JobPosts/>, <Interviewers/>];
 
   const [Content, setContent] = useState<React.ReactNode> (contents[0]);
   const changeContent = (contentId : number) => {
@@ -21,11 +23,11 @@ const manage : React.FC = () => {
   return (
     <>
         <div className = {margin.hr} >
-            <Dashboard changeContent = {changeContent}/>
-            {Content}
+            <Menu changeContent = {changeContent}/>
+              {Content}
         </div>
-        <Header/>
-        <Footer/>
+        {/* <Header/>
+        <Footer/> */}
     </>
   )
 }

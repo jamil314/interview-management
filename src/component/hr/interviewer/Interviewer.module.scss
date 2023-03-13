@@ -1,0 +1,50 @@
+@import '../../../styles/global.module.scss';
+
+.pageFill{
+    height: 100vh;
+    width: 100vw;
+
+    @include center_col();
+
+    position:fixed ;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: row;
+
+    @include glassmorph(0.3, 4px, black, 0, 0);
+
+    z-index: 2;
+}
+
+
+.main{
+    width: 400px;
+    height: fit-content;
+}
+
+.add{
+    width: 600px;
+    height: fit-content;
+}
+
+
+.card{
+    display: flex;
+    height: 100px;
+    width: 300px;
+}
+
+.photo{
+    border-right: 4px;
+    border-right-style : solid;
+    padding-right: 8px;
+    margin-right: 16px;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

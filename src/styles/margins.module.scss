@@ -1,7 +1,9 @@
 @import 'global.module.scss';
 
-$header-height: 85px;
-$footer-height: 50px;
+// $header-height: 85px;
+// $footer-height: 50px;
+$header-height: 0px;
+$footer-height: 0px;
 
 @mixin margins{
     @include center_row();
@@ -17,14 +19,6 @@ $footer-height: 50px;
     justify-content: start;
     position: absolute;
     top: 0;
-}
-
-.logo {
-    height: 55px;
-    width: 55px;
-    background-image: url('../resources/logo2.jpg');
-    background-size: cover;
-    margin-right: 15px;
 }
 
 .footer{
@@ -52,5 +46,4 @@ $footer-height: 50px;
 
 .hr{
     @include main_body('../resources/bg2.jpg');
-    position: relative ;
 }

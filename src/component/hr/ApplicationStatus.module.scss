@@ -78,6 +78,16 @@
     overflow-y: scroll;
 }
 
+
+.showSetInterview {
+    transition: transform .5s;
+}
+
+.hideSetInterview{
+    transform: translateX(100vw);
+    transition: transform .5s;
+}
+
 .interviewerCard{
     display: flex;
     height: 100px;
