@@ -10,7 +10,7 @@ import data from "../../../Dummy/DummyApplications.js";
 import hr from '../hr/hr.module.scss'
 
 import Resume from '@/component/hr/Resume';
-import TopBar from './TopBar';
+import TopBar from '../TopBar';
 
 
 

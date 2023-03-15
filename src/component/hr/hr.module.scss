@@ -56,20 +56,6 @@
     }
 }
 
-.topBar{
-    height: 40px;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    background-color: aliceblue;
-
-    display: flex;
-    > * {
-        @include center-col();
-        padding: 0 5px;
-    }
-}
-
-
 :export{
     tableHeight: calc(100vh - $header-height - $footer-height - 129px - 50px);
 }

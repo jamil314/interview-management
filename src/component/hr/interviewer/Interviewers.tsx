@@ -8,8 +8,9 @@ import Highlighter from 'react-highlight-words';
 import data from "../../../../Dummy/DummyInterviewers.js";
 
 import hr from '../hr.module.scss'
-import TopBar from '../TopBar';
+import TopBar from '../../TopBar';
 import InterviewrCard from './InterviewerCard';
+import AddInterviewer from './AddInterviewer';
 
 interface DataType {
     id: string;
@@ -260,9 +261,9 @@ const Interviewers: React.FC = () => {
           <div className={focusInterviewer?hr.show : hr.hide}>
             <InterviewrCard resetFocusInterviewer = {resetFocusInterviewer}/>
           </div>
-          {/* <div className={createInterviewer?hr.show : hr.hide}>
-            <AddInterviewer InterviewerCreationStatus = {interviewerCreationStatus}/>
-          </div> */}
+          <div className={createInterviewer?hr.show : hr.hide}>
+            <AddInterviewer interviewerCreationStatus = {interviewerCreationStatus}/>
+          </div>
 
       </>
     )

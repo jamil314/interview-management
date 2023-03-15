@@ -11,7 +11,7 @@ import hr from '../hr.module.scss'
 
 import JobCard from './JobCard';
 import AddJob from './AddJob';
-import TopBar from '../TopBar';
+import TopBar from '../../TopBar';
 import AddPosition from './AddPosition';
 
 interface DataType {
@@ -265,7 +265,7 @@ const JobPosts: React.FC = () => {
       <>
         {contextHolder}
         <div className={hr.content}>
-        <TopBar notification={`Application Deadline for the post "Senior Software Engineer" is over`}/>
+        <TopBar notification={`Application Deadline for the post "Senior Software Engineer" is over Application Deadline for the post "Senior Software Engineer" is over Application Deadline for the post "Senior Software Engineer" is over`}/>
           <div className={hr.TableContainer}>
             <Table
                 scroll={{y: `${hr.tableHeight}` }}
