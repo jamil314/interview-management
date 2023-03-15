@@ -1,11 +1,12 @@
 import React from "react";
-import { Badge, Calendar } from "antd";
-import type { BadgeProps } from "antd";
+import { Badge, Calendar, Col, Layout, Row, theme } from "antd";
 import type { Dayjs } from "dayjs";
-import type { CalendarMode } from "antd/es/calendar/generateCalendar";
+import type { HeaderRender } from "antd/es/calendar/generateCalendar";
 import { InterviewTimes, type InterViewProps } from "Dummy/interviewTime";
 import moment from "moment";
-import "../../styles/calender.module.css";
+import AvatarDropdown from "./AvatarDropdown";
+
+const { Header, Content, Footer } = Layout;
 
 const getDateData = (sentValue: Dayjs, interviewValues: InterViewProps[]) => {
   for (let i = 0; i < interviewValues.length; i++) {
@@ -55,7 +56,11 @@ const getMonthData = (sentValue: Dayjs, interviewValues: InterViewProps[]) => {
   return candates.length > 0 ? candates : null;
 };
 
-const Calender: React.FC = () => {
+const CalendarComponent: React.FC = () => {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   const monthCellRender = (value: Dayjs) => {
     const monthData = getMonthData(value, InterviewTimes);
     return monthData ? (
@@ -100,12 +105,43 @@ const Calender: React.FC = () => {
     ) : null;
   };
 
+  const headerRender: HeaderRender<Dayjs> = ({
+    value,
+    type,
+    onChange,
+    onTypeChange,
+  }) => {};
+
   return (
-    <Calendar
-      dateCellRender={dateCellRender}
-      monthCellRender={monthCellRender}
-    />
+    <Layout className="calander-layout" style={{ marginLeft: 200 }}>
+      <Header
+        style={{
+          height: 64,
+          padding: 0,
+          margin: "16px 8px 0",
+          background: colorBgContainer,
+          borderRadius: 12,
+        }}
+      >
+        <Row align="middle">
+          <Col span={22} offset={1}>
+            <h2>Your Interview Calendar</h2>
+          </Col>
+          <Col span={2}>
+            <AvatarDropdown />
+          </Col>
+        </Row>
+      </Header>
+      <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+        <Calendar
+          headerRender={headerRender}
+          dateCellRender={dateCellRender}
+          monthCellRender={monthCellRender}
+        />
+      </Content>
+      <Footer style={{ textAlign: "center" }}></Footer>
+    </Layout>
   );
 };
 
-export default Calender;
+export default CalendarComponent;

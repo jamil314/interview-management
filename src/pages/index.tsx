@@ -5,7 +5,7 @@ import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Footer from "@/component/margins/Footer";
 import margin from "../styles/margins.module.scss";
-import InterviewerHome from "@/component/interviewer/InterviewerHome";
+import InterviewerMenu from "@/component/interviewer/InterviewerMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +19,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <InterviewerHome />
+      <LoginForm />
     </>
   );
 }
