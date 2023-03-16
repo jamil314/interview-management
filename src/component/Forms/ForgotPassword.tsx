@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { Button, Form, Input, Tooltip } from 'antd'
-import { LockOutlined, UserOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { Button, Form, Input } from 'antd'
+import { UserOutlined } from '@ant-design/icons';
 import form from './Form.module.scss'
 
 type Credential = {
@@ -38,56 +38,39 @@ const LoginForm : React.FC = () => {
   return (
     <Form
         className={form.form}
-        name="normal_login"
+        name="forgot_password"
         initialValues={{ remember: true }}
         onFinish={onFinish}
-    >
+        title='Forgot Password'
+    >   
         <Form.Item
             name="email"
             rules={[{
                     required: true,
-                    message: 'Please input your Username!',
-                }, ]}
-        >
-            <Input prefix={<UserOutlined />} placeholder="Username" />
-        </Form.Item>
-
-        <Form.Item
-            name="password"
-            rules={[{
-                    required: true,
-                    message: 'Please input your Password!',
+                    message: 'Please input valid email!',
             }, ]}
         >
             <Input
-                prefix={<LockOutlined />}
+                prefix={<UserOutlined />}
                 type={showPassword ? "normal" : "password"}
-                placeholder="Password"
-                suffix={
-                    <Tooltip title = {showPassword ? "Hide Password" : "Show Password"}>
-                        {
-                            showPassword?
-                                <EyeOutlined onClick={() => setShowPassword(false)}/>
-                               :<EyeInvisibleOutlined onClick={() => setShowPassword(true)}/>
-                        }
-                    </Tooltip>
-                }
+                placeholder="Email"
 
             />
         </Form.Item>
 
+
         <Form.Item>
-            <a className = {form.forgot} href="http://localhost:3000/forgot_password">
-                Forgot password
+            <a className = {form.forgot} href="http://localhost:3000">
+                Never mind
             </a>
         </Form.Item>
 
         <Form.Item>
             <Button type="primary" htmlType="submit" className = {form.button}>
-                Log in
+                Submit
             </Button>
         </Form.Item>
-        
+
     </Form>
   )
 }
