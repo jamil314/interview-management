@@ -4,6 +4,8 @@ import { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import CalendarComponent from "./CalendarComponent";
 import InterviewerHome from "./InterviewerHome";
+import Image from "next/image";
+import logo2 from "src/resources/logo2.jpg";
 
 const { Sider } = Layout;
 
@@ -51,7 +53,9 @@ const InterviewerMenu: React.FC = () => {
             margin: 16,
             background: "rgba(255, 255, 255, 0.2)",
           }}
-        />
+        >
+          <Image src={logo2} alt="logo" width={32} height={32} />
+        </div>
         <Menu
           onClick={(e) => changePage(parseInt(e.key))}
           theme="dark"

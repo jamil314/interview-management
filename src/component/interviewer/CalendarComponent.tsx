@@ -123,16 +123,25 @@ const CalendarComponent: React.FC = () => {
           borderRadius: 12,
         }}
       >
-        <Row align="middle">
-          <Col span={22} offset={1}>
-            <h2>Your Interview Calendar</h2>
+        <Row align="middle" justify="center">
+          <Col span={22}>
+            <Row>
+              <Col offset={1}>
+                <h2>Your Interview Calendar</h2>
+              </Col>
+            </Row>
           </Col>
           <Col span={2}>
             <AvatarDropdown />
           </Col>
         </Row>
       </Header>
-      <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+      <Content
+        style={{
+          margin: "24px 16px 0",
+          overflow: "initial",
+        }}
+      >
         <Calendar
           headerRender={headerRender}
           dateCellRender={dateCellRender}

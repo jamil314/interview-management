@@ -36,7 +36,7 @@ const InterviewerHome = () => {
           borderRadius: 12,
         }}
       >
-        <Row align="middle">
+        <Row align="middle" justify="center">
           <Col span={22}>
             <Row>
               <Col offset={1}>
@@ -83,7 +83,7 @@ const InterviewerHome = () => {
             flexDirection: "row",
           }}
         >
-          <Calendar style={{ width: 768 }} fullscreen={false} />
+          <Calendar style={{ width: 640 }} fullscreen={false} />
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}></Footer>
