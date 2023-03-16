@@ -1,14 +1,32 @@
-import React from 'react'
-import hr from '../hr/hr.module.scss'
+import { Col, Layout, Row } from "antd";
+import React from "react";
+import hr from "../hr/hr.module.scss";
 
-type Props = {}
+type Props = {};
+
+const { Header, Content, Footer } = Layout;
 
 const DashBoard = (props: Props) => {
   return (
-    <div className={hr.content}>
-        DashBoard
-    </div>
-  )
-}
+    <Layout>
+      <Header className={hr.header}>
+        <Row>
+          <Col flex="auto">
+            <Row>Hello bayjed</Row>
+            <Row> how u doin </Row>
+          </Col>
+          <Col flex="48px"> avatar</Col>
+        </Row>
+      </Header>
+      <Content>
+        <Row>
+          <Col span={8}>2 interview</Col>
+          <Col span={8}>3 application</Col>
+          <Col span={8}>69 jobs</Col>
+        </Row>
+      </Content>
+    </Layout>
+  );
+};
 
-export default DashBoard
+export default DashBoard;
