@@ -38,14 +38,14 @@ const InterviewerHome = () => {
       >
         <Row align="middle" justify="center">
           <Col span={22}>
-            <Row>
+            <Row align="middle">
               <Col offset={1}>
                 <h2 className="header-text-big">
-                  Hello {interviewerData.firstName}{" "}
+                  Hello {interviewerData.firstName}
                 </h2>
               </Col>
             </Row>
-            <Row>
+            <Row align="middle">
               <Col offset={1}>
                 <h4 className="header-text-small">
                   {"Here's"} your schedule for today
@@ -58,7 +58,7 @@ const InterviewerHome = () => {
           </Col>
         </Row>
       </Header>
-      <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+      <Content style={{ margin: "24px 16px 0" }}>
         <div className="stat-card" style={{}}>
           <Card
             title={
