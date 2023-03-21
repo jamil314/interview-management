@@ -20,11 +20,34 @@
 
 
 .main{
-    width: 400px;
+    // width: 400px;
     height: fit-content;
 }
 
 .add{
     width: 600px;
     height: fit-content;
+}
+
+.listItem{
+    display: flex;
+    > * {
+        @include center_col();
+        margin: 10px;
+    }
+}
+
+.posting{
+    // width: 60vw;
+    display: flex;
+    .left{
+        max-width: 35vw;
+        margin-right: 16px;
+        padding-right: 16px;
+        border-right: 1px solid;
+        border-color: rgba(0, 0, 0, 0.5);
+    }
+    .right{
+        max-width: 55vw;
+    }
 }

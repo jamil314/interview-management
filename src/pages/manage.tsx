@@ -37,3 +37,5 @@ const manage: React.FC = () => {
 };
 
 export default manage;
+
+export default Manage;

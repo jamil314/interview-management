@@ -30,7 +30,7 @@ const TopBar: React.FC<Props> = ({ notification }) => {
           prefix={searching ? <SearchOutlined /> : <div />}
           className={topBar.searchArea}
           placeholder="Search anything"
-          onPressEnter={(e) => alert(`Searched : ${e.target.value}`)}
+          onPressEnter={(e) => alert(`Searched `)}
           suffix={
             searching ? (
               <Tooltip title="Cancel Search">
@@ -55,7 +55,7 @@ const TopBar: React.FC<Props> = ({ notification }) => {
               icon={<SearchOutlined />}
               onClick={() => {
                 setSearching(true);
-                ref.current?.focus();
+                // ref.current?.focus();
               }}
             />
           </Tooltip>

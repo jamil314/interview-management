@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { SearchOutlined, DownloadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
+import axios from 'axios';
+
+import { SearchOutlined } from '@ant-design/icons';
 import { InputRef, Tooltip, notification } from 'antd';
 import { Button, Input, Space, Table } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps, ColumnsType, FilterValue, SorterResult  } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
-import data from "../../../../Dummy/DummyJobs.js";
+// import data from "../../../../Dummy/DummyJobs.js";
 
 import hr from '../hr.module.scss'
 
@@ -16,24 +18,51 @@ import AddPosition from './AddPosition';
 
 interface DataType {
     id: string;
-    Position: string;
-    Salary: string;
-    Opening: string;
-    Applicants: string;
-    Deadline: string;
+    position: string;
+    maxSalary: Number;
+    minSalary: Number;
+    vacancy: string;
+    numOfApplicants: Number;
+    deadline: string;
+	createdAt? : string;
+	isAvailable? : boolean;
 }
 
 type DataIndex = keyof DataType;
 
 
 const JobPosts: React.FC = () => {
-
-  const [focusJob, setFocusJob] = useState<null | string>(null);
+  
+  const [focusJob, setFocusJob] = useState<null | DataType>(null);
   const [createJob, setCreateJob] = useState(false);
   const [createPosition, setCreatePosition] = useState(false);
-
+  
+  const [tableData, setTableData] = useState([]);
 
   const [api, contextHolder] = notification.useNotification();
+
+  const getTableData = () => {
+
+    axios.get(`http://192.168.68.101:8080/jobsearch`,
+		{
+			headers: {
+				Authorization : `Bearer ${localStorage.getItem('token')}`
+			}
+		}).then(res => {
+			const t = res.data.data;
+			console.log(t);
+			setTableData(t);
+			setLoading(false);
+			
+		}).catch(err => {
+			if(err) {
+				console.log(err);
+				
+			}
+		})
+	
+    
+  }
 
   const jobCreationStatus = ( action : string) => {
     closeCreateJob();
@@ -184,7 +213,7 @@ const JobPosts: React.FC = () => {
       <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
     onFilter: (value, record) =>
-      record[dataIndex]
+      record
         .toString()
         .toLowerCase()
         .includes((value as string).toLowerCase()),
@@ -210,43 +239,42 @@ const JobPosts: React.FC = () => {
   const columns: ColumnsType<DataType> = [
     {
         title: 'Position',
-        dataIndex: 'Position',
+        dataIndex: 'position',
         filters: [
             { text: 'CEO',    value: 'CEO' },
             { text: 'Intern', value: 'Intern' },
         ],
     //   filteredValue: filteredInfo.name || null,
-        onFilter: (value: any, record) => record.Position.includes(value),
-        sorter: (a, b) => a.Position.length - b.Position.length,
+        onFilter: (value: any, record) => record.position.includes(value),
+        sorter: (a, b) => a.position.length - b.position.length,
     //   sortOrder: sortedInfo.columnKey === 'Position' ? sortedInfo.order : null,
         // ellipsis: true,
-        width: '20%',
 
     },
     {
         title: 'Salary',
-        dataIndex: 'Salary',
-        width: '20%',
+		render: (value, record) => <a>{`${record.minSalary} - ${record.maxSalary}`}</a>,
+        width: '15%',
     },
     {
-        title: 'Opening',
-        dataIndex: 'Opening',
-        width: '20%',
+        title: 'Vacancy',
+        dataIndex: 'vacancy',
+        width: '10%',
     },
     {
         title: 'Applicants',
-        dataIndex: 'Applicants',
-        width: '20%',
+        dataIndex: 'numOfApplicants',
+        width: '10%',
     },
     {
         title: 'Application Deadline',
-        dataIndex: 'Deadline',
+        dataIndex: 'deadline',
         width: '20%',
     },
   ];
 
   useEffect(() => {
-    setLoading(false);  
+    getTableData();  
   }, [])
   
 
@@ -271,7 +299,7 @@ const JobPosts: React.FC = () => {
                 scroll={{y: `${hr.tableHeight}` }}
                 columns = {columns}
                 rowKey={(record) => record.id}
-                dataSource={data}
+                dataSource={tableData}
                 pagination={tableParams.pagination}
                 loading={loading}
                 onChange={handleTableChange}
@@ -279,7 +307,11 @@ const JobPosts: React.FC = () => {
                 onRow={(record, rowIndex) => {
                   return {
                     onClick : event => //alert(`opening resume of participent with id : ${record.id}`),
-                    setFocusJob(`${record.id}`)
+                    {
+                      setFocusJob(record);
+                      console.log(record);
+                    }
+                    
                   };
                 }}
             />
@@ -291,7 +323,7 @@ const JobPosts: React.FC = () => {
           </div>
         </div>
           <div className={focusJob?hr.show : hr.hide}>
-            <JobCard resetFocusJob = {resetFocusJob}/>
+            <JobCard record = {focusJob} resetFocusJob = {resetFocusJob}/>
           </div>
           <div className={createJob?hr.show : hr.hide}>
             <AddJob jobCreationStatus = {jobCreationStatus}/>
