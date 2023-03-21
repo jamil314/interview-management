@@ -1,10 +1,9 @@
-import { Col, Layout, Row, theme } from "antd";
+import { Calendar, Col, Divider, Layout, Row, theme } from "antd";
 import React from "react";
-import hr from "../hr/hr.module.scss";
-import TopBar from "../../TopBar";
+import DashboardButton from "./DashboardButton";
 import DashboardCards from "./DashboardCards";
-import AvatarDropdown from "@/component/interviewer/AvatarDropdown";
 import DashboardTopbar from "./DashboardTopbar";
+import NotificationBox from "./NotificationBox";
 
 const { Header, Content, Footer } = Layout;
 
@@ -43,6 +42,20 @@ const HRDashBoard = () => {
             { bigText: "60", smallText: "Nine" },
           ]}
         />
+        <Divider />
+        <Row gutter={24} justify="space-around">
+          <Col span={11}>
+            <DashboardButton />
+            <Divider />
+            <Calendar fullscreen={false} />
+          </Col>
+
+          <Col span={12}>
+            <h2>
+              <NotificationBox />
+            </h2>
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );
