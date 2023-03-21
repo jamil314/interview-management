@@ -10,21 +10,50 @@ type Credential = {
 }
 
 const onFinish  = (credential : Credential) => {
+    console.log(credential);
+    
     axios.post(`http://192.168.68.101:8080/account/login`, credential)
         .then(res => {
-            const {token, roles} = res.data.data;
+            console.log(res);
+
+            const {token, roles} = res.data;
+
             
-            console.log(token, roles);
+
+            localStorage.setItem('token', token);
 
             if(roles.includes('Interviewer')) window.location.href = '/interviewer'; 
-            else window.location.href = '/manage'; 
-            
-
+            else if(roles.includes('HR')) window.location.href = '/manage'; 
+            else window.location.href = '/jobs'; 
             
         })
         .catch(err => {
             if(err) {
+
                 console.log(err);
+
+                let status = err.response?.status;
+                if(status == undefined) status = 500;
+
+    
+                console.log(status);
+
+                switch (status) {
+                    case 401:
+                        alert(err.response.data.message)
+                        break;
+                    case 400:
+                        alert("Bad Request")
+                        break;
+                    case 500:
+                        alert('Server error')
+                        break;
+                    default:
+                        alert('Unknown error')
+                        break;
+                }
+
+
                 
             }
         })
@@ -77,7 +106,7 @@ const LoginForm : React.FC = () => {
         </Form.Item>
 
         <Form.Item>
-            <a className = {form.forgot} href="http://localhost:3000/forgot_password">
+            <a className = {form.forgot} href="http://localhost:3000/Forgot_password">
                 Forgot password
             </a>
         </Form.Item>

@@ -1,9 +1,7 @@
 import React from 'react'
 import hr from '../hr/hr.module.scss'
 
-type Props = {}
-
-const DashBoard = (props: Props) => {
+const DashBoard = () => {
   return (
     <div className={hr.content}>
         DashBoard

@@ -25,9 +25,9 @@ const card : React.FC<Props> = ({interviewerCreationStatus}) => {
     return (
         <Card
             actions={[
-                <div onClick={() => interviewerCreationStatus('Discard')}> Discard </div>,
-                <div onClick={() => interviewerCreationStatus('Draft')}> Save Draft </div>,
-                <div onClick={() => interviewerCreationStatus('Confirm')}> Confirm </div>,
+                <div onClick={() => interviewerCreationStatus('Discard')} key='discard'> Discard </div>,
+                <div onClick={() => interviewerCreationStatus('Draft')} key='draft'> Save Draft </div>,
+                <div onClick={() => interviewerCreationStatus('Confirm')} key='confirm'> Confirm </div>,
             ]}
         >
         <Form
