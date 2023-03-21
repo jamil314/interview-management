@@ -105,12 +105,12 @@ const CalendarComponent: React.FC = () => {
     ) : null;
   };
 
-  const headerRender: HeaderRender<Dayjs> = ({
-    value,
-    type,
-    onChange,
-    onTypeChange,
-  }) => {};
+  // const headerRender: HeaderRender<Dayjs> = ({
+  //   value,
+  //   type,
+  //   onChange,
+  //   onTypeChange,
+  // }) => {};
 
   return (
     <Layout className="calander-layout" style={{ marginLeft: 200 }}>
@@ -143,7 +143,7 @@ const CalendarComponent: React.FC = () => {
         }}
       >
         <Calendar
-          headerRender={headerRender}
+          // headerRender={headerRender}
           dateCellRender={dateCellRender}
           monthCellRender={monthCellRender}
         />

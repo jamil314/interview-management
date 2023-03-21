@@ -4,7 +4,7 @@ import margin from "../styles/margins.module.scss";
 import ForgotPassword from "../component/Forms/ForgotPassword";
 type Props = {}
 
-const forgot_password = (props: Props) => {
+const Forgot_password = (props: Props) => {
     
     const {query} = useRouter();
     console.log(query);
@@ -16,4 +16,4 @@ const forgot_password = (props: Props) => {
     )
 }
 
-export default forgot_password
+export default Forgot_password

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { Button, Form, Input, Tooltip } from 'antd'
-import { LockOutlined, UserOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { LockOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import form from './Form.module.scss'
 
 type Credential = {

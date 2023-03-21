@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Card, RadioChangeEvent, Rate } from 'antd';
+import { Button, Card, Rate } from 'antd';
 import { Radio, Timeline } from 'antd';
 
-import { EditOutlined,EllipsisOutlined,SettingOutlined } from '@ant-design/icons';
+// import { EditOutlined,EllipsisOutlined,SettingOutlined } from '@ant-design/icons';
 
 import status from './ApplicationStatus.module.scss'
 interface flipperProp {

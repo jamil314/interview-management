@@ -11,9 +11,9 @@ import DashBoard from '@/component/hr/DashBoard';
 import Interviewers from '@/component/hr/interviewer/Interviewers';
 
 
-const manage : React.FC = () => {
+const Manage : React.FC = () => {
   
-  const contents = [<DashBoard/>, <Applications/>, <Shortlist/>, <JobPosts/>, <Interviewers/>];
+  const contents = [<DashBoard key='hr-dashboard'/>, <Applications key='hr-applications'/>, <Shortlist key='hr-shortlist'/>, <JobPosts key='hr-jobPosts'/>, <Interviewers key='hr-interviewers'/>];
 
   const [Content, setContent] = useState<React.ReactNode> (contents[0]);
   const changeContent = (contentId : number) => {
@@ -32,4 +32,4 @@ const manage : React.FC = () => {
   )
 }
 
-export default manage
+export default Manage

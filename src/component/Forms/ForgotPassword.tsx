@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import axios from 'axios';
 import { Button, Form, Input } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
@@ -33,8 +33,6 @@ const onFinish  = (credential : Credential) => {
 
 const LoginForm : React.FC = () => {
 
-    const [showPassword, setShowPassword] = useState(false);
-
   return (
     <Form
         className={form.form}
@@ -52,7 +50,6 @@ const LoginForm : React.FC = () => {
         >
             <Input
                 prefix={<UserOutlined />}
-                type={showPassword ? "normal" : "password"}
                 placeholder="Email"
 
             />
