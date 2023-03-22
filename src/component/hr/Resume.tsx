@@ -20,6 +20,9 @@ interface props {
 }
 
 const Resume: React.FC<props> = ({closeResume, resumeId, initialScreening}) => {
+
+  console.log(resumeId);
+  
   
   const toolbarPluginInstance = toolbarPlugin();
   const { Toolbar } = toolbarPluginInstance;
@@ -93,9 +96,10 @@ const Resume: React.FC<props> = ({closeResume, resumeId, initialScreening}) => {
                   <Toolbar>{customToolbar}</Toolbar>
 
                     <Viewer 
-                        
+                        fileUrl={resumeId ? resumeId : 'http://192.168.68.101:8090/api/files/sgbc47vjl2xaoev/8o028bidetxexe0/job_interview_database_shema_20_feb_2023_zW3R5rUSyI.pdf'}
+                        // fileUrl={resumeId}
                         // fileUrl = './resume1.pdf'
-                        fileUrl = 'http://192.168.68.101:8090/api/files/sgbc47vjl2xaoev/8o028bidetxexe0/job_interview_database_shema_20_feb_2023_zW3R5rUSyI.pdf'
+                        // fileUrl = 'http://192.168.68.101:8090/api/files/sgbc47vjl2xaoev/8o028bidetxexe0/job_interview_database_shema_20_feb_2023_zW3R5rUSyI.pdf'
                         plugins = {[
                           toolbarPluginInstance
                         ]}
