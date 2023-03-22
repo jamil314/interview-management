@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import {
   SearchOutlined,
   DownloadOutlined,
@@ -24,7 +25,7 @@ import type {
 } from "antd/es/table/interface";
 
 import Highlighter from "react-highlight-words";
-import data from "../../../Dummy/DummyApplications.js";
+// import data from "../../../Dummy/DummyApplications.js";
 
 import hr from "../hr/hr.module.scss";
 
@@ -32,19 +33,21 @@ import Resume from "@/component/hr/Resume";
 import TopBar from "../TopBar";
 
 interface DataType {
-  id: number;
-  Name: string;
-  Email: string;
-  Phone: string;
-  Position: string;
-  Resume: string;
-  Status: string;
-  applicationDate: string;
+  id: string;
+  name: string;
+  email: string;
+  Phone?: string;
+  position: string;
+  cv: string;
+  status?: string;
+  createdAt: string;
 }
 
 type DataIndex = keyof DataType;
 
 const Applications: React.FC = () => {
+  const [data, setData] = useState([]);
+
   const [resumeId, setResumeId] = useState<null | string>(null);
   const openResume = (id: string) => {
     setResumeId(id);
@@ -52,6 +55,32 @@ const Applications: React.FC = () => {
 
   const closeResume = () => {
     setResumeId(null);
+  };
+
+  const downloadCv = (url: string) => {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/pdf",
+      },
+    })
+      .then((response) => response.blob())
+      .then((blob) => {
+        // Create blob link to download
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", url.split("/")[3] + ".pdf");
+
+        // Append to html link element page
+        document.body.appendChild(link);
+
+        // Start download
+        link.click();
+
+        // Clean up and remove the link
+        link.parentNode?.removeChild(link);
+      });
   };
 
   const [filteredInfo, setFilteredInfo] = useState<
@@ -177,7 +206,7 @@ const Applications: React.FC = () => {
       <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value, record) =>
-      record[dataIndex]
+      record
         .toString()
         .toLowerCase()
         .includes((value as string).toLowerCase()),
@@ -199,52 +228,59 @@ const Applications: React.FC = () => {
       ),
   });
 
+  interface DataType {
+    id: string;
+    name: string;
+    email: string;
+    Phone?: string;
+    position: string;
+    cv: string;
+    status?: string;
+    createdAt: string;
+  }
+
   const columns: ColumnsType<DataType> = [
     {
       title: "Name",
-      dataIndex: "Name",
-      sorter: (a, b) => a.Name.length - b.Name.length,
-      ...getColumnSearchProps("Name"),
+      dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      ...getColumnSearchProps("name"),
     },
     {
-      title: "Phone",
-      dataIndex: "Phone",
+      title: "Email",
+      dataIndex: "email",
       width: "20%",
     },
     {
       title: "Position",
-      dataIndex: "Position",
+      dataIndex: "position",
       filters: [
         { text: "CEO", value: "CEO" },
         { text: "Intern", value: "Intern" },
       ],
       //   filteredValue: filteredInfo.name || null,
-      onFilter: (value: any, record) => record.Position.includes(value),
-      sorter: (a, b) => a.Position.length - b.Position.length,
+      onFilter: (value: any, record) => record.position.includes(value),
+      sorter: (a, b) => a.position.length - b.position.length,
       //   sortOrder: sortedInfo.columnKey === 'Position' ? sortedInfo.order : null,
       // ellipsis: true,
-      width: "15%",
+      width: "20%",
     },
     {
       title: "Date",
-      dataIndex: "applicationDate",
+      dataIndex: "createdAt",
       width: "15%",
     },
-    {
-      title: "Status",
-      dataIndex: "Status",
-      width: "10%",
-      render: (value) => (
-        <div style={value == "Read" ? { opacity: 0.8 } : { opacity: 1 }}>
-          {value == "Read" ? value : value + " *"}
-        </div>
-      ),
-      filters: [
-        { text: "Read", value: "Read" },
-        { text: "Unread", value: "Unread" },
-      ],
-      onFilter: (value: any, record) => record.Status.includes(value),
-    },
+    // {
+    //     title: 'Status',
+    //     dataIndex: 'Status',
+    //     width: '10%',
+    //     render: (value) => <div style = {value ==  "Read" ? {opacity :  0.8} : {opacity :  1} }>{value ==  "Read" ? value   : value + " *" }</div>,
+    //     filters: [
+    //         { text: 'Read',   value: 'Read' },
+    //         { text: 'Unread', value: 'Unread' },
+    //     ],
+    //     onFilter: (value: any, record) => record.status.includes(value),
+    // },
     {
       title: (
         <Tooltip title="Download All CV">
@@ -284,24 +320,47 @@ const Applications: React.FC = () => {
           </Modal>
         </Tooltip>
       ),
-      dataIndex: "Resume",
+      dataIndex: "cv",
       width: "10%",
       render: (record, index) => (
         <Tooltip title="Download CV">
+          {/* <a href={index.cv} download = {`${index.id}.pdf`}> */}
           <DownloadOutlined
             onClick={(e) => {
               e.stopPropagation();
-              alert(`Downloading Cv of participant with id: ${index.id}`);
+              downloadCv(index.cv);
+              // alert(`Downloading Cv of participant with id: ${index.id}`)
             }}
             style={{ padding: "2px 20px" }}
           />
+          {/* <a href={index.cv} download="YourName resume.pdf"> Download CV </a> */}
+          {/* </a> */}
         </Tooltip>
       ),
     },
   ];
 
+  const populate = () => {
+    axios
+      .get(`http://192.168.68.101:8080/applications`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setData(res.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+  };
+
   useEffect(() => {
-    setLoading(false);
+    populate();
   }, []);
 
   const handleTableChange = (pagination: {}, filters: any, sorter: any) => {
@@ -329,13 +388,13 @@ const Applications: React.FC = () => {
           loading={loading}
           onChange={handleTableChange}
           rowClassName={(record, index) =>
-            `tableCell${record.Status} shadowOnHover`
+            `tableCell${record.status} shadowOnHover`
           }
           onRow={(record, rowIndex) => {
             return {
               onClick: (
                 event //alert(`opening resume of participent with id : ${record.id}`),
-              ) => openResume(`${record.id}`),
+              ) => openResume(`${record.cv}`),
             };
           }}
         />
