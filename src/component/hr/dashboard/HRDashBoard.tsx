@@ -1,3 +1,4 @@
+import InvisibleDivider from "@/component/InvisibleDivider";
 import { Calendar, Col, Divider, Layout, Row, theme } from "antd";
 import React from "react";
 import DashboardButton from "./DashboardButton";
@@ -42,11 +43,11 @@ const HRDashBoard = () => {
             { bigText: "60", smallText: "Nine" },
           ]}
         />
-        <Divider />
+        <InvisibleDivider />
         <Row gutter={24} justify="space-around">
           <Col span={11}>
             <DashboardButton />
-            <Divider />
+            <InvisibleDivider />
             <Calendar fullscreen={false} />
           </Col>
 
