@@ -260,9 +260,7 @@ const Applications: React.FC = () => {
             onCancel={() => setModalOpen(false)}
             footer={[
               <Button
-                key="download-unread"
-                danger
-                ghost
+                key="download-all"
                 type="default"
                 loading={loading}
                 onClick={() => setModalOpen(false)}
@@ -270,14 +268,14 @@ const Applications: React.FC = () => {
                 Download All
               </Button>,
               <Button
-                key="download-all"
+                key="download-unread"
                 type="primary"
                 loading={loading}
                 onClick={() => setModalOpen(false)}
               >
                 Download All Unread
               </Button>,
-              <Button key="back" onClick={() => setModalOpen(false)}>
+              <Button danger key="back" onClick={() => setModalOpen(false)}>
                 Cancel
               </Button>,
             ]}
