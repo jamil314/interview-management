@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios'
 import { SearchOutlined, DownloadOutlined, CloudDownloadOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Tooltip, notification, Space, InputRef, Input, Table } from 'antd';
+import { Button, Tooltip, notification, Space, InputRef, Input, Table, Modal } from 'antd';
 import type { ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps, ColumnsType, FilterValue, SorterResult  } from 'antd/es/table/interface';
 
@@ -76,6 +76,8 @@ const Applications: React.FC = () => {
   const [filteredInfo, setFilteredInfo] = useState<Record<string, FilterValue | null>>({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
   
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -260,10 +262,43 @@ interface DataType {
     // },
     {
         title: 
-            <Tooltip title = "Download All CV">
-                <CloudDownloadOutlined onClick={e => alert('Downloading Cv of all participants in this page')}/>
-            </Tooltip>,
-        dataIndex: 'Resume',
+        <Tooltip title="Download All CV">
+          <Button
+            type="link"
+            block
+            icon={<CloudDownloadOutlined />}
+            onClick={() => setModalOpen(true)}
+          ></Button>
+          <Modal
+            open={modalOpen}
+            title="Confirm Multiple Downloads?"
+            onCancel={() => setModalOpen(false)}
+            footer={[
+              <Button
+                key="download-all"
+                type="default"
+                loading={loading}
+                onClick={() => setModalOpen(false)}
+              >
+                Download All
+              </Button>,
+              <Button
+                key="download-unread"
+                type="primary"
+                loading={loading}
+                onClick={() => setModalOpen(false)}
+              >
+                Download All Unread
+              </Button>,
+              <Button danger key="back" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>,
+            ]}
+          >
+            This action will download multiple CVs at once. Are you sure?
+          </Modal>
+        </Tooltip>,
+        dataIndex: 'cv',
         width: '10%',
         render: (record, index) => 
         <Tooltip title = "Download CV">
