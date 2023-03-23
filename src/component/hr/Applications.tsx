@@ -283,13 +283,15 @@ const Applications: React.FC = () => {
     // },
     {
       title: (
-        <Tooltip title="Download All CV">
+        <Tooltip title="Download multiple CVs">
           <Button
-            type="link"
+            type="text"
             block
             icon={<CloudDownloadOutlined />}
             onClick={() => setModalOpen(true)}
-          ></Button>
+          >
+            Download
+          </Button>
           <Modal
             open={modalOpen}
             title="Confirm Multiple Downloads?"
@@ -323,18 +325,21 @@ const Applications: React.FC = () => {
       dataIndex: "cv",
       width: "10%",
       render: (record, index) => (
-        <Tooltip title="Download CV">
-          {/* <a href={index.cv} download = {`${index.id}.pdf`}> */}
-          <DownloadOutlined
+        <Tooltip title={`Download ${index.name}'s CV`}>
+          <Button
+            style={{
+              padding: 0,
+              height: "100%",
+              width: "100%",
+            }}
+            type="text"
+            icon={<DownloadOutlined />}
             onClick={(e) => {
               e.stopPropagation();
               downloadCv(index.cv);
               // alert(`Downloading Cv of participant with id: ${index.id}`)
             }}
-            style={{ padding: "2px 20px" }}
-          />
-          {/* <a href={index.cv} download="YourName resume.pdf"> Download CV </a> */}
-          {/* </a> */}
+          ></Button>
         </Tooltip>
       ),
     },
